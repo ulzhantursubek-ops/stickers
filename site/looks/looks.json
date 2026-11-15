@@ -1,0 +1,8 @@
+[
+ {"key":"accent","product":"tee","color":"tee-white","views":["front"],"prints":[["w2-115","front",-9,15,0],["w2-016","sleeveL",0,0,0]]},
+ {"key":"bomb","product":"tee","color":"tee-black","views":["front"],"prints":[["w2-018","front",-10,15,-8],["w2-028","front",1,17,6],["w2-043","front",11,13,0],["w2-014","front",-4,7,10],["w2-044","front",7,4,-6],["w2-074","front",-12,1,4],["w2-025","front",2,-4,-10],["w2-102","front",12,-3,8],["w2-058","front",-6,-8,0]]},
+ {"key":"back","product":"longsleeve","color":"ls-black","views":["back"],"prints":[["w2-167","back",0,8,0],["w2-028","front",-9,15,0]]},
+ {"key":"series","product":"tee","color":"tee-grey","views":["front"],"prints":[["w2-116","front",-12,10,0],["w2-125","front",-4,10,0],["w2-134","front",4,10,0],["w2-138","front",12,10,0]]},
+ {"key":"nost","product":"longsleeve","color":"ls-white","views":["front"],"prints":[["w2-450","front",-6,14,-8],["w2-476","front",2,9,4],["w2-497","front",-3,3,-3],["w2-528","front",8,15,0]]},
+ {"key":"text","product":"tee","color":"tee-brown","views":["front"],"prints":[["w2-226","front",0,8,0],["w2-570","sleeveR",0,0,0]]}
+]
