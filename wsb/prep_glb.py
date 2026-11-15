@@ -148,7 +148,7 @@ for name in names:
     N = N / np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
     a_p = add(P.astype(np.float32), 34962, 5126, 'VEC3', True)
     a_n = add(N.astype(np.float32), 34962, 5126, 'VEC3')
-    a_t = add(np.c_[UV[:, 0], 1 - UV[:, 1]].astype(np.float32), 34962, 5126, 'VEC2')  # glTF: v вниз
+    a_t = add(np.c_[UV[:, 0], UV[:, 1]].astype(np.float32), 34962, 5126, 'VEC2')  # v вверх (CanvasTexture конструктора, flipY=true)
     a_i = add(Fc.astype(np.uint32).reshape(-1), 34963, 5125, 'SCALAR')
     meshes.append({'name': name, 'primitives': [{'attributes': {'POSITION': a_p, 'NORMAL': a_n, 'TEXCOORD_0': a_t}, 'indices': a_i, 'material': 0}]})
     nodes.append({'name': name, 'mesh': len(meshes) - 1})
