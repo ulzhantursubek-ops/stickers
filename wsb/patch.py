@@ -127,5 +127,40 @@ rep("""      s.position.set(0, 80, -140), y.add(s), y.add(s.target),""",
         f2.position.set(60, -30, -120), y.add(f2), y.add(f2.target)
       }(),""")
 
+
+# 5) масштаб двумя пальцами (щипок) на телефоне
+rep("""          }), f.addEventListener("pointercancel", function(e) {
+            l(e, !0)
+          }),""", """          }), f.addEventListener("touchstart", function(e) {
+            if (e.touches.length >= 2 && a.ready) {
+              e.preventDefault();
+              var p0 = e.touches[0], p1 = e.touches[1];
+              f.__pz = { d: Math.hypot(p0.clientX - p1.clientX, p0.clientY - p1.clientY) || 1, z: I.zoom };
+              if (J) {
+                var t0 = J;
+                J = null, f.classList.remove("wsb-drag");
+                try { f.releasePointerCapture(t0.id) } catch (x) {}
+                "move" === t0.mode && t0.moved && (We(), Ye())
+              }
+              T = 0, d.auto && (d.auto = !1, $e())
+            }
+          }, {
+            passive: !1
+          }), f.addEventListener("touchmove", function(e) {
+            if (f.__pz && e.touches.length >= 2) {
+              e.preventDefault();
+              var p0 = e.touches[0], p1 = e.touches[1], dd = Math.hypot(p0.clientX - p1.clientX, p0.clientY - p1.clientY) || 1;
+              I.zoom = Math.max(.35, Math.min(1.7, f.__pz.z * f.__pz.d / dd)), Te()
+            }
+          }, {
+            passive: !1
+          }), f.addEventListener("touchend", function(e) {
+            e.touches.length < 2 && (f.__pz = null)
+          }), f.addEventListener("touchcancel", function(e) {
+            e.touches.length < 2 && (f.__pz = null)
+          }), f.addEventListener("pointercancel", function(e) {
+            l(e, !0)
+          }),""")
+
 open('/home/claude/wsb/wsb-builder-v6.pretty.js', 'w', encoding='utf-8').write(src)
 print('ok', len(src))
