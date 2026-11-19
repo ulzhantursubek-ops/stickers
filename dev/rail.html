@@ -14,7 +14,7 @@
 .wr-turn{position:relative;width:100%;height:100%;transform-origin:50% 0;transition:transform .9s cubic-bezier(.22,.9,.25,1);transform-style:preserve-3d}
 .wr-hg{position:absolute;left:50%;top:0;transform:translateX(-50%) translateZ(0);display:block;overflow:visible}
 .wr-ly{position:absolute;left:0;width:100%;-webkit-user-drag:none;backface-visibility:visible}
-.wr-ly.mid{filter:brightness(.42) saturate(.8)}
+.wr-ly.mid{filter:brightness(.55) saturate(.85)}
 .wr-ly.back{filter:brightness(.7)}
 .wr-img{position:absolute;left:0;width:100%;display:block;-webkit-user-drag:none}
 .wr-drop{position:absolute;left:12%;width:76%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(30,30,60,.28) 0,rgba(30,30,60,0) 70%);filter:blur(6px);transition:opacity .9s,transform .9s}
@@ -45,7 +45,7 @@ var ITEMS=[
 var START=0;                        /* какая вещь развёрнута сначала */
 var AUTOPLAY=3500;                  /* мс между сменой, 0 — выключить */
 var LINK='#rec4796228203';          /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
-var LAYERS=7;                       /* слои объёма (больше — объёмнее, но тяжелее) */
+var LAYERS=10;                      /* слои объёма (больше — объёмнее, но тяжелее) */
 var SHOW_BG=true;                   /* голубой фон внутри элемента */
 var RAIL_Y_PC=0.17;                 /* высота рейла на компьютере (доля высоты элемента) */
 var RAIL_Y_MOB=0.30;                /* высота рейла на телефоне */
@@ -70,7 +70,7 @@ function geom(){
   var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
   var L=desk?W*.40:W*.03,R=desk?W*.97:W*.97,avail=R-L;
   var y=desk?H*RAIL_Y_PC:H*RAIL_Y_MOB;
-  var SL=desk?.3:.22;
+  var SL=desk?.27:.22;
   var S=desk?H*.62:H*.45;var maxw=avail/(1+(n-1)*SL);if(S>maxw)S=maxw;
   G={W:W,H:H,desk:desk,L:L,R:R,y:y,S:S,fw:S,slot:S*SL};
 }
@@ -80,7 +80,7 @@ function layout(){
   var total=g.fw+(n-1)*g.slot,x=g.L+(g.R-g.L-total)/2,cx=0;
   els.forEach(function(d,k){
     var w=k===act?g.fw:g.slot,c=x+w/2;x+=w;if(k===act)cx=c;
-    var S=g.S,hw=S*.62,u=hw/100,imgTop=12*u-.075*S+.012*S,dep=S*.05;
+    var S=g.S,hw=S*.62,u=hw/100,imgTop=12*u-.075*S+.012*S,dep=S*.022;
     d.style.width=w+'px';d.style.height=(imgTop+S)+'px';
     d.style.left=(c-w/2)+'px';
     var sw=d.querySelector('.wr-sw');sw.style.width=S+'px';sw.style.marginLeft=(-S/2)+'px';
@@ -88,7 +88,7 @@ function layout(){
     var dist=Math.abs(k-act);d.style.zIndex=k===act?50:40-dist;
     d.classList.toggle('on',k===act);
     var tr=d.querySelector('.wr-turn');
-    tr.style.transform=k===act?'perspective(1600px) rotateY(0deg)':'perspective(1600px) rotateY('+(k<act?72:-72)+'deg)';
+    tr.style.transform=k===act?'perspective(1600px) rotateY(0deg)':'perspective(1600px) rotateY('+(k<act?78:-78)+'deg)';
     var hg=d.querySelector('.wr-hg');hg.style.width=hw+'px';hg.style.height=(34*u)+'px';
     var im=d.querySelector('.wr-img'),sh=d.querySelector('.wr-shade');
     im.style.top=sh.style.top=imgTop+'px';im.style.height=sh.style.height=S+'px';
