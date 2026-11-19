@@ -32,13 +32,12 @@ var root=document.getElementById('wsRail');if(!root||root.getAttribute('data-rea
 
 /* ==== НАСТРОЙКИ ==== */
 var ITEMS=[
- {name:'Чёрная',img:'https://static.tildacdn.pro/tild3665-3065-4332-b039-373236343231/_____.png'},
- {name:'Песочная',img:'https://static.tildacdn.pro/tild3131-6230-4564-b362-363031373239/-__.png'},
- {name:'Графитовая',img:'https://static.tildacdn.pro/tild6362-3233-4931-a339-303735313438/____.png'},
- {name:'Бордовая',img:'https://static.tildacdn.pro/tild6561-6465-4539-b362-613764616538/-____.png'},
- {name:'Пыльно-голубая',img:'https://static.tildacdn.pro/tild6332-3738-4462-b331-386633626133/____.png'}
+ {name:'Чёрная футболка',sub:'оверсайз · 240 г',img:'https://static.tildacdn.pro/tild3665-3065-4332-b039-373236343231/_____.png'},
+ {name:'Бордовая футболка',sub:'оверсайз · 240 г',img:'https://static.tildacdn.pro/tild3131-6230-4564-b362-363031373239/-__.png'},
+ {name:'Горчичный лонгслив',sub:'оверсайз · 300 г',img:'https://static.tildacdn.pro/tild6362-3233-4931-a339-303735313438/____.png'},
+ {name:'Тёмно-синий лонгслив',sub:'оверсайз · 300 г',img:'https://static.tildacdn.pro/tild6561-6465-4539-b362-613764616538/-____.png'},
+ {name:'Белый лонгслив',sub:'оверсайз · 300 г',img:'https://static.tildacdn.pro/tild6332-3738-4462-b331-386633626133/____.png'}
 ];
-var SUB='оверсайз · 240 г';          /* подпись под названием, '' — без подписи */
 var START=0;                        /* какая вещь развёрнута сначала */
 var AUTOPLAY=3500;                  /* мс между сменой, 0 — выключить */
 var LINK='#rec4796228203';          /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
@@ -62,7 +61,7 @@ var G={};
 function geom(){
   var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
   var L=desk?W*.40:W*.03,R=desk?W*.97:W*.97,avail=R-L;
-  var y=desk?H*.12:H*.06;
+  var y=desk?H*.17:H*.06;
   var hgH;var fh=desk?H*.66:H*.68;var fw=fh*.9;
   var SL=.3;var maxw=avail/(1+(n-1)*SL);if(fw>maxw){fw=maxw;fh=fw/.9}
   hgH=fw*.3;
@@ -85,7 +84,7 @@ function layout(){
     im.style.top=sh.style.top=(g.fw*.62*.3)+'px';im.style.height=sh.style.height=g.fh+'px';
   });
   nameEl.style.left=cx+'px';nameEl.style.top=(g.y+g.fw*.62*.3+g.fh+(g.desk?16:8))+'px';
-  var b=nameEl.querySelector('b'),s=nameEl.querySelector('span');b.textContent=ITEMS[act].name;s.textContent=SUB;s.style.display=SUB?'block':'none';
+  var b=nameEl.querySelector('b'),s=nameEl.querySelector('span');b.textContent=ITEMS[act].name;var sub=ITEMS[act].sub||'';s.textContent=sub;s.style.display=sub?'block':'none';
   b.style.fontSize=(g.desk?16:13)+'px';s.style.fontSize=(g.desk?10:8.5)+'px';
 }
 function swing(k){var s=els[k]&&els[k].querySelector('.wr-sw');if(!s)return;s.classList.remove('go');void s.offsetWidth;s.classList.add('go')}
