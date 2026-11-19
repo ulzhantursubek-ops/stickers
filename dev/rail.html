@@ -42,6 +42,8 @@ var START=0;                        /* какая вещь развёрнута 
 var AUTOPLAY=3500;                  /* мс между сменой, 0 — выключить */
 var LINK='#rec4796228203';          /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
 var SHOW_BG=true;                   /* голубой фон внутри элемента */
+var RAIL_Y_PC=0.17;                 /* высота рейла на компьютере (доля высоты элемента) */
+var RAIL_Y_MOB=0.30;                /* высота рейла на телефоне */
 /* ================== */
 
 if(!SHOW_BG)root.querySelector('.wr-bg').style.display='none';
@@ -61,9 +63,9 @@ var G={};
 function geom(){
   var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
   var L=desk?W*.40:W*.03,R=desk?W*.97:W*.97,avail=R-L;
-  var y=desk?H*.17:H*.06;
-  var hgH;var fh=desk?H*.66:H*.68;var fw=fh*.9;
-  var SL=.3;var maxw=avail/(1+(n-1)*SL);if(fw>maxw){fw=maxw;fh=fw/.9}
+  var y=desk?H*RAIL_Y_PC:H*RAIL_Y_MOB;
+  var hgH;var fh=desk?H*.66:H*.5;var fw=fh*.9;
+  var SL=desk?.3:.22;var maxw=avail/(1+(n-1)*SL);if(fw>maxw){fw=maxw;fh=fw/.9}
   hgH=fw*.3;
   G={W:W,H:H,desk:desk,L:L,R:R,y:y,fw:fw,fh:fh,slot:fw*SL,hgH:hgH};
 }
