@@ -41,7 +41,9 @@ var AUTOPLAY=3800;         /* мс между сменой, 0 — выключи
 var LINK='#rec4796228203'; /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
 var SHOW_BG=true;          /* голубой фон внутри элемента */
 var RAIL_Y_PC=0.16;        /* высота рейла на компьютере (доля высоты элемента) */
-var RAIL_Y_MOB=0.28;       /* высота рейла на телефоне */
+var RAIL_Y_MOB=0.17;       /* высота рейла на телефоне */
+var BOTTOM_PC=0.97;        /* до какой высоты могут опускаться вещи на компьютере */
+var BOTTOM_MOB=0.57;       /* то же на телефоне: чуть выше, чем начинается текст под рейлом */
 /* ================== */
 
 var AR=805/600;            /* пропорции картинок */
@@ -63,7 +65,7 @@ function layout(){
   var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
   var L=desk?W*.40:W*.04,R=desk?W*.97:W*.96,avail=R-L,y=H*(desk?RAIL_Y_PC:RAIL_Y_MOB);
   var FW=.86,SW=.25;                              /* ширина места под развёрнутую / боковую вещь, в долях S */
-  var S=Math.min(avail/(FW+(n-1)*SW),(H-y-(desk?70:52))/(AR*.99));
+  var S=Math.min(avail/(FW+(n-1)*SW),(H*(desk?BOTTOM_PC:BOTTOM_MOB)-y-(desk?44:34))/(AR*.99));
   var th=Math.max(4,S*.016);                      /* толщина перекладины */
   G={S:S,y:y,desk:desk};
   bar.style.left=(L-W*.01)+'px';bar.style.width=(avail+W*.02)+'px';bar.style.top=(y-th)+'px';bar.style.height=th+'px';
