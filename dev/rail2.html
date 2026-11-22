@@ -1,0 +1,96 @@
+<style>
+.wr{position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate;pointer-events:none;user-select:none;-webkit-user-select:none;--ink:#3F1521}
+.wr *{box-sizing:border-box}
+.wr-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(circle at 62% 46%,rgba(255,255,255,.38) 0,rgba(255,255,255,.12) 30%,rgba(255,255,255,0) 60%),radial-gradient(ellipse 80% 105% at 62% 46%,#d2deee 0%,#8ca4c9 100%)}
+.wr-track{position:absolute;inset:0;z-index:2;transform:translateX(105%);filter:blur(8px);transition:transform 1.5s cubic-bezier(.16,.84,.24,1),filter 1.2s ease-out .2s}
+.wr.in .wr-track{transform:none;filter:none}
+.wr-bar{position:absolute;z-index:1;border-radius:99px;background:linear-gradient(#f4f6f9 0%,#d9dee5 35%,#aeb6c1 80%,#8f98a5 100%);box-shadow:0 2px 3px rgba(40,40,60,.22)}
+.wr-it{position:absolute;top:0;left:0;z-index:2;pointer-events:auto;cursor:pointer;transition:left .75s cubic-bezier(.22,.9,.25,1),width .75s cubic-bezier(.22,.9,.25,1);-webkit-tap-highlight-color:transparent;outline:none}
+.wr-sw{position:absolute;top:0;left:50%;transform-origin:50% 0;pointer-events:none}
+.wr-sw.go{animation:wrSwing 1.6s cubic-bezier(.3,.6,.3,1)}
+@keyframes wrSwing{0%{transform:rotate(0)}18%{transform:rotate(2.4deg)}40%{transform:rotate(-1.6deg)}62%{transform:rotate(.8deg)}82%{transform:rotate(-.3deg)}100%{transform:rotate(0)}}
+.wr-im{position:absolute;left:0;top:0;width:100%;height:100%;display:block;-webkit-user-drag:none;transform-origin:50% 0;will-change:transform,opacity,filter;transition:transform .5s cubic-bezier(.3,.7,.2,1),opacity .38s ease,filter .45s ease}
+.wr-im.side{opacity:1;transform:none;filter:drop-shadow(0 10px 10px rgba(30,30,60,.16))}
+.wr-im.front{opacity:0;transform:scaleX(.3);filter:blur(7px)}
+.wr-it.on .wr-im.side{opacity:0;transform:scaleX(2.4);filter:blur(7px)}
+.wr-it.on .wr-im.front{opacity:1;transform:none;filter:drop-shadow(0 14px 14px rgba(30,30,60,.2))}
+.wr-curl{position:absolute;z-index:3;overflow:visible;pointer-events:none}
+.wr-name{position:absolute;z-index:3;transform:translateX(-50%);text-align:center;color:var(--ink);font-family:'Montserrat',Arial,sans-serif;white-space:nowrap;transition:left .75s cubic-bezier(.22,.9,.25,1),top .75s cubic-bezier(.22,.9,.25,1)}
+.wr-name b{display:block;font-weight:700;letter-spacing:.2px}
+.wr-name span{display:block;opacity:.65;margin-top:3px;letter-spacing:1.5px;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.wr-track,.wr-im,.wr-it{transition:none}.wr-sw.go{animation:none}}
+</style>
+<div class="wr" id="wsRail">
+  <div class="wr-bg"></div>
+  <div class="wr-track"><div class="wr-bar"></div><div class="wr-name"><b></b><span></span></div></div>
+</div>
+<script>
+(function(){
+var root=document.getElementById('wsRail');if(!root||root.getAttribute('data-ready'))return;root.setAttribute('data-ready','1');
+
+/* ==== НАСТРОЙКИ ==== */
+var BASE='https://cdn.jsdelivr.net/gh/ulzhantursubek-ops/stickers@7bfa5054efea64f2a6298121c3f4647386791380/rail/';
+var ITEMS=[
+ {name:'Чёрная футболка',    sub:'оверсайз · 240 г', side:BASE+'black_side.webp', front:BASE+'black_front.webp', fb:.783},
+ {name:'Серая футболка',     sub:'оверсайз · 240 г', side:BASE+'grey_side.webp',  front:BASE+'grey_front.webp',  fb:.763},
+ {name:'Коричневый лонгслив',sub:'оверсайз · 300 г', side:BASE+'brown_side.webp', front:BASE+'brown_front.webp', fb:.824},
+ {name:'Белый лонгслив',     sub:'оверсайз · 300 г', side:BASE+'white_side.webp', front:BASE+'white_front.webp', fb:.88}
+];
+var START=0;               /* какая вещь развёрнута сначала */
+var AUTOPLAY=3800;         /* мс между сменой, 0 — выключить */
+var LINK='#rec4796228203'; /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
+var SHOW_BG=true;          /* голубой фон внутри элемента */
+var RAIL_Y_PC=0.16;        /* высота рейла на компьютере (доля высоты элемента) */
+var RAIL_Y_MOB=0.28;       /* высота рейла на телефоне */
+/* ================== */
+
+var AR=805/600;            /* пропорции картинок */
+if(!SHOW_BG)root.querySelector('.wr-bg').style.display='none';
+var p=root.parentElement,up=0;while(p&&up<6){p.style.pointerEvents='none';if(p.classList&&(p.classList.contains('tn-elem')||p.classList.contains('t396__elem')))break;p=p.parentElement;up++}
+var track=root.querySelector('.wr-track'),bar=root.querySelector('.wr-bar'),nameEl=root.querySelector('.wr-name'),n=ITEMS.length,act=START,els=[],timer=null,pause=0;
+var hoverable=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches;
+var CURL='<svg class="wr-curl" viewBox="0 0 40 30"><defs><linearGradient id="wrW" x1="0" x2="1"><stop offset="0" stop-color="#6d737c"/><stop offset=".45" stop-color="#e9ecf0"/><stop offset="1" stop-color="#7c838d"/></linearGradient></defs><path d="M30 30 C30 12 27 3 18 3 C10 3 6 9 6 17" fill="none" stroke="url(#wrW)" stroke-width="4.2" stroke-linecap="round"/></svg>';
+ITEMS.forEach(function(it,k){
+  var d=document.createElement('div');d.className='wr-it';d.setAttribute('role','button');d.setAttribute('aria-label',it.name);d.tabIndex=0;
+  d.innerHTML='<div class="wr-sw"><img class="wr-im side" alt="" draggable="false" src="'+it.side+'"><img class="wr-im front" alt="" draggable="false" src="'+it.front+'"></div>'+CURL;
+  d.addEventListener('mouseenter',function(){if(hoverable){stop();set(k)}});
+  d.addEventListener('click',function(){stop();if(k!==act){set(k)}else if(LINK){var t=document.querySelector(LINK);if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset,behavior:'smooth'})}});
+  d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();d.click()}});
+  track.appendChild(d);els.push(d);
+});
+var G={};
+function layout(){
+  var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
+  var L=desk?W*.40:W*.04,R=desk?W*.97:W*.96,avail=R-L,y=H*(desk?RAIL_Y_PC:RAIL_Y_MOB);
+  var FW=.86,SW=.25;                              /* ширина места под развёрнутую / боковую вещь, в долях S */
+  var S=Math.min(avail/(FW+(n-1)*SW),(H-y-(desk?70:52))/(AR*.99));
+  var th=Math.max(4,S*.016);                      /* толщина перекладины */
+  G={S:S,y:y,desk:desk};
+  bar.style.left=(L-W*.01)+'px';bar.style.width=(avail+W*.02)+'px';bar.style.top=(y-th)+'px';bar.style.height=th+'px';
+  var total=S*(FW+(n-1)*SW),x=L+(avail-total)/2,cx=0;
+  els.forEach(function(d,k){
+    var w=(k===act?FW:SW)*S,c=x+w/2;x+=w;if(k===act)cx=c;
+    d.style.width=w+'px';d.style.height=(S*AR)+'px';d.style.left=(c-w/2)+'px';d.style.top=y+'px';
+    d.style.zIndex=k===act?20:10-Math.abs(k-act);
+    var sw=d.querySelector('.wr-sw');sw.style.width=S+'px';sw.style.height=(S*AR)+'px';sw.style.marginLeft=(-S/2)+'px';
+    var cu=d.querySelector('.wr-curl'),cw=th*2.6;cu.style.width=cw+'px';cu.style.height=(cw*.75)+'px';cu.style.left=(w/2-cw*.75)+'px';cu.style.top=(-th-cw*.75*.55)+'px';
+    d.classList.toggle('on',k===act);
+  });
+  var fb=ITEMS[act].fb||.85;
+  nameEl.style.left=cx+'px';nameEl.style.top=(y+S*AR*fb+(desk?16:10))+'px';
+  var b=nameEl.querySelector('b'),s=nameEl.querySelector('span');b.textContent=ITEMS[act].name;var sub=ITEMS[act].sub||'';s.textContent=sub;s.style.display=sub?'block':'none';
+  b.style.fontSize=(desk?16:13)+'px';s.style.fontSize=(desk?10:8.5)+'px';
+}
+function swing(k,delay){var s=els[k]&&els[k].querySelector('.wr-sw');if(!s)return;setTimeout(function(){s.classList.remove('go');void s.offsetWidth;s.classList.add('go')},delay||0)}
+function set(k){k=((k%n)+n)%n;if(k===act)return;var old=act;act=k;layout();swing(k,120);swing(old,60);els.forEach(function(d,j){if(j!==k&&j!==old&&Math.abs(j-k)===1)swing(j,200)})}
+function stop(){pause=Date.now()+9000}
+function play(){if(timer)clearInterval(timer);if(AUTOPLAY>0)timer=setInterval(function(){if(document.hidden||Date.now()<pause||!root.classList.contains('in'))return;set(act+1)},AUTOPLAY)}
+root.addEventListener('mouseleave',function(){pause=Date.now()+3500});
+function intro(){if(root.classList.contains('in'))return;root.classList.add('in');els.forEach(function(d,k){swing(k,1050+k*110)})}
+var pre=0;ITEMS.forEach(function(it){[it.side,it.front].forEach(function(u){var i=new Image();i.onload=i.onerror=function(){pre++};i.src=u})});
+function whenReady(cb){var t0=Date.now();(function w(){if(pre>=n*2||Date.now()-t0>2500)cb();else setTimeout(w,80)})()}
+if(window.IntersectionObserver){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){io.disconnect();whenReady(intro)}})},{threshold:.25});io.observe(root)}else whenReady(intro);
+if(window.ResizeObserver)new ResizeObserver(layout).observe(root);else window.addEventListener('resize',layout);
+layout();play();
+})();
+</script>
