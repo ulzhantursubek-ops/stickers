@@ -29,11 +29,11 @@
 var root=document.getElementById('wsRail');if(!root||root.getAttribute('data-ready'))return;root.setAttribute('data-ready','1');
 
 /* ==== НАСТРОЙКИ ==== */
-var BASE='https://cdn.jsdelivr.net/gh/ulzhantursubek-ops/stickers@318467086066eebf9077156649e3bc8133fbce94/rail2/';
+var BASE='https://cdn.jsdelivr.net/gh/ulzhantursubek-ops/stickers@a04d26353d70a8ace54909b7214186d6833b41b5/rail3/';
 var ITEMS=[
  {name:'Чёрная футболка',    sub:'оверсайз · 240 г', side:BASE+'black_side.webp', front:BASE+'black_front.webp', fb:.761},
- {name:'Серая футболка',     sub:'оверсайз · 240 г', side:BASE+'grey_side.webp',  front:BASE+'grey_front.webp',  fb:.742},
- {name:'Коричневый лонгслив',sub:'оверсайз · 300 г', side:BASE+'brown_side.webp', front:BASE+'brown_front.webp', fb:.807},
+ {name:'Серая футболка',     sub:'оверсайз · 240 г', side:BASE+'grey_side.webp',  front:BASE+'grey_front.webp',  fb:.741},
+ {name:'Коричневый лонгслив',sub:'оверсайз · 300 г', side:BASE+'brown_side.webp', front:BASE+'brown_front.webp', fb:.808},
  {name:'Белый лонгслив',     sub:'оверсайз · 300 г', side:BASE+'white_side.webp', front:BASE+'white_front.webp', fb:.857}
 ];
 var START=0;               /* какая вещь развёрнута сначала */
@@ -46,7 +46,7 @@ var BOTTOM_PC=0.97;        /* до какой высоты могут опуск
 var BOTTOM_MOB=0.60;       /* то же на телефоне: чуть выше, чем начинается текст под рейлом */
 /* ================== */
 
-var AR=805/600;            /* пропорции картинок */
+var AR=1611/1200;            /* пропорции картинок */
 if(!SHOW_BG)root.querySelector('.wr-bg').style.display='none';
 var p=root.parentElement,up=0;while(p&&up<6){p.style.pointerEvents='none';if(p.classList&&(p.classList.contains('tn-elem')||p.classList.contains('t396__elem')))break;p=p.parentElement;up++}
 var track=root.querySelector('.wr-track'),bar=root.querySelector('.wr-bar'),nameEl=root.querySelector('.wr-name'),n=ITEMS.length,act=START,els=[],timer=null,pause=0;
