@@ -1,0 +1,71 @@
+<!-- wear / your way: «Всего 3 шага» для телефона. Вставить в блок T123 сразу ПОД Zero Block «Всего 3 шага».
+     На телефоне этот блок показывается вместо Zero Block, на компьютере он скрыт. -->
+<style>
+.wys{display:none}
+@media (max-width:639px){
+  #rec4802592503{display:none!important}           /* Zero Block «Всего 3 шага» скрыт на телефоне */
+  html{scroll-snap-type:y proximity}                 /* мягко доводит экран ровно к блоку */
+  .wys{display:flex;position:relative;overflow:hidden;background:#fff;scroll-snap-align:start;
+       height:100vh;height:100svh;min-height:560px;flex-direction:column;justify-content:space-between;
+       padding:calc(env(safe-area-inset-top) + 64px) 24px calc(env(safe-area-inset-bottom) + 22px);
+       font-family:'Montserrat',Arial,sans-serif;color:#3F1521;box-sizing:border-box}
+  .wys *{box-sizing:border-box}
+  .wys-deco{position:absolute;pointer-events:none;z-index:0;user-select:none;-webkit-user-drag:none}
+  .wys-in{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;flex:1}
+  .wys h2{margin:0;text-align:center;font-weight:800;font-size:clamp(30px,9vw,40px);line-height:1;letter-spacing:.5px;color:#3F1521}
+  .wys-steps{position:relative;display:flex;flex-direction:column;gap:clamp(18px,4.2vh,34px);margin:0 auto;width:100%;max-width:420px}
+  .wys-line{position:absolute;left:29px;top:30px;bottom:30px;width:2px;background:#3F1521;transform-origin:top;transform:scaleY(0);transition:transform 1.1s cubic-bezier(.3,.7,.2,1) .15s}
+  .wys-step{display:flex;align-items:center;gap:18px;opacity:0;transform:translateY(40px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .wys-num{flex:none;width:60px;height:60px;border-radius:50%;background:#3F1521;color:#fff;display:grid;place-items:center;font-weight:800;font-size:28px;box-shadow:0 6px 16px rgba(63,21,33,.22);position:relative;z-index:1}
+  .wys-t{font-weight:800;font-size:clamp(17px,5vw,21px);line-height:1.15;text-transform:uppercase}
+  .wys-d{font-size:clamp(14px,4vw,16px);line-height:1.4;margin-top:5px;opacity:.85}
+  .wys-sum{background:#3F1521;color:#fff;border-radius:22px;padding:20px 18px;text-align:center;opacity:0;transform:translateY(40px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .wys-sum b{display:block;font-weight:800;font-size:clamp(15px,4.4vw,18px);line-height:1.25;letter-spacing:.3px}
+  .wys-sum span{display:block;font-size:clamp(12.5px,3.6vw,14px);line-height:1.4;margin-top:7px;opacity:.85}
+  .wys-down{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:#3F1521;opacity:0;transition:opacity .6s ease;-webkit-tap-highlight-color:transparent}
+  .wys-down span{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+  .wys-down i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#3F1521;animation:wysBob 1.8s ease-in-out infinite}
+  .wys-down svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes wysBob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+  .wys.on .wys-line{transform:scaleY(1)}
+  .wys.on .wys-step,.wys.on .wys-sum{opacity:1;transform:none}
+  .wys.on .wys-down{opacity:1}
+  .wys.on .wys-step:nth-of-type(1){transition-delay:.15s}
+  .wys.on .wys-step:nth-of-type(2){transition-delay:.35s}
+  .wys.on .wys-step:nth-of-type(3){transition-delay:.55s}
+  .wys.on .wys-sum{transition-delay:.75s}
+  .wys.on .wys-down{transition-delay:1s}
+  @media (max-height:640px){.wys-num{width:50px;height:50px;font-size:23px}.wys-line{left:24px;top:25px;bottom:25px}.wys-sum{padding:14px}}
+  @media (prefers-reduced-motion:reduce){.wys-step,.wys-sum,.wys-down,.wys-line{transition:none!important}.wys-down i{animation:none}}
+}
+</style>
+<section class="wys" id="wys-steps" aria-label="Всего 3 шага">
+  <img class="wys-deco" alt="" src="https://static.tildacdn.pro/tild3838-3961-4433-a632-316665333638/02-S-verh-levo.png" style="left:-26%;top:-4%;width:52%;opacity:.85">
+  <img class="wys-deco" alt="" src="https://static.tildacdn.pro/tild6239-3830-4037-b439-663062376131/01-petlya-verh-pravo.png" style="right:-14%;top:14%;width:36%;opacity:.55">
+  <img class="wys-deco" alt="" src="https://static.tildacdn.pro/tild3665-6463-4766-a465-653861356336/05-koltso-levo-obrez.png" style="right:-22%;bottom:-6%;width:46%;opacity:.7">
+  <div class="wys-in">
+    <h2>ВСЕГО 3 ШАГА</h2>
+    <div class="wys-steps">
+      <div class="wys-line"></div>
+      <div class="wys-step"><div class="wys-num">1</div><div><div class="wys-t">Выбираешь вещь</div><div class="wys-d">Размер, цвет и модель: футболка или лонгслив</div></div></div>
+      <div class="wys-step"><div class="wys-num">2</div><div><div class="wys-t">Собираешь дизайн</div><div class="wys-d">Стикеры и патчи в конструкторе</div></div></div>
+      <div class="wys-step"><div class="wys-num">3</div><div><div class="wys-t">Отправляешь</div><div class="wys-d">Мы прессуем принты и отправляем готовую вещь</div></div></div>
+    </div>
+    <div class="wys-sum"><b>ИТОГ = ИЗДЕЛИЕ + СТИКЕРЫ И ПАТЧИ</b><span>Сумма считается в конструкторе сразу</span></div>
+    <a class="wys-down" href="#rec4796228203" aria-label="Перейти к конструктору"><span>Конструктор ниже</span><i><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></i></a>
+  </div>
+</section>
+<script>
+(function(){
+  var s=document.getElementById('wys-steps');if(!s)return;
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>.35){s.classList.add('on');io.disconnect()}})},{threshold:[0,.35,.6]});
+    io.observe(s);
+  }else s.classList.add('on');
+  var a=s.querySelector('.wys-down');
+  a.addEventListener('click',function(ev){
+    var b=document.getElementById('wear-studio-builder'),t=(b&&(b.closest('.t-rec')||b))||document.querySelector(a.getAttribute('href'));
+    if(!t)return;ev.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset,behavior:'smooth'});
+  });
+})();
+</script>
