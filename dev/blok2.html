@@ -7,7 +7,7 @@
   html{scroll-snap-type:y proximity}                 /* мягко доводит экран ровно к блоку */
   .wys{display:flex;position:relative;overflow:hidden;background:#fff;scroll-snap-align:start;
        height:100vh;height:100svh;min-height:560px;flex-direction:column;justify-content:space-between;
-       padding:calc(env(safe-area-inset-top) + 66px) 24px calc(env(safe-area-inset-bottom) + 18px);
+       padding:calc(env(safe-area-inset-top) + 22px) 24px calc(env(safe-area-inset-bottom) + 18px);
        font-family:'Montserrat',Arial,sans-serif;color:#3F1521;box-sizing:border-box}
   .wys *{box-sizing:border-box}
   .wys-deco{position:absolute;pointer-events:none;z-index:0;user-select:none;-webkit-user-drag:none;height:auto;max-width:none}
@@ -15,7 +15,7 @@
   .wys-steps{flex:1;justify-content:space-evenly!important;gap:0!important;margin-top:clamp(4px,1.5vh,14px)!important}
   .wys-sum{padding:clamp(18px,3.4vh,30px) 18px!important}
   .wys-down{margin-top:2px}
-  .wys h2{margin:0;padding:0;text-align:center;font-weight:800;font-size:clamp(28px,8.6vw,38px);line-height:1;letter-spacing:.3px;color:#3F1521;white-space:nowrap}
+  .wys h2{margin:0;padding:0;text-align:center;font-weight:800;font-size:clamp(26px,7.6vw,34px);line-height:1;letter-spacing:.3px;color:#3F1521;white-space:nowrap}
   .wys-steps{position:relative;display:flex;flex-direction:column;gap:clamp(18px,5vh,44px);margin:0 auto;width:100%;max-width:420px}
   .wys-seg{position:absolute;left:30px;width:2px;background:#3F1521;transform-origin:top;transform:scaleY(0);transition:transform .32s cubic-bezier(.45,0,.25,1);z-index:0}
   .wys h2{opacity:0;transform:translateY(24px);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
@@ -42,7 +42,7 @@
   .wys.on .s3{transition-delay:1.45s}
   .wys.on .wys-sum{transition-delay:1.8s}
   .wys.on .wys-down{transition-delay:2.1s}
-  @media (max-height:640px){.wys-num{width:52px;height:52px;font-size:24px}.wys{padding-top:calc(env(safe-area-inset-top) + 62px)}}
+  @media (max-height:640px){.wys-num{width:52px;height:52px;font-size:24px}.wys{padding-top:calc(env(safe-area-inset-top) + 18px)}}
   @media (prefers-reduced-motion:reduce){.wys h2,.wys-step,.wys-sum,.wys-down,.wys-seg{transition:none!important}.wys-down i{animation:none}}
 }
 </style>
@@ -74,6 +74,16 @@
       g[i].style.left=x+'px';g[i].style.top=(a.bottom-off-br.top)+'px';g[i].style.height=Math.max(0,(b.top-offb)-(a.bottom-off))+'px';
     }
   }
+  /* обрезаем пустой белый низ первого блока на телефоне: он заканчивается там, где кончается голубой фон */
+  function trimHero(){
+    var rec=document.getElementById('rec4628251903');if(!rec)return;
+    var ab=rec.querySelector('.t396__artboard'),bg=rec.querySelector('.wr-bg'),parts=[ab,rec.querySelector('.t396__carrier'),rec.querySelector('.t396__filter')];
+    if(!ab||!bg)return;
+    if(window.innerWidth>639){parts.forEach(function(n){n&&n.style.removeProperty('height')});return}
+    var h=Math.round(bg.getBoundingClientRect().bottom-ab.getBoundingClientRect().top);
+    if(h>300&&h<ab.offsetHeight+1){parts.forEach(function(n){n&&n.style.setProperty('height',h+'px','important')});ab.style.overflow='hidden'}
+  }
+  trimHero();window.addEventListener('load',trimHero);window.addEventListener('resize',function(){setTimeout(trimHero,300)});setTimeout(trimHero,1200);setTimeout(trimHero,3000);
   segs();window.addEventListener('resize',segs);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(segs);setTimeout(segs,800);
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>.35){s.classList.add('on');io.disconnect()}})},{threshold:[0,.35,.6]});
