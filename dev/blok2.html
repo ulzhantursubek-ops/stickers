@@ -14,7 +14,8 @@
   .wys-in{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;flex:1}
   .wys h2{margin:0;text-align:center;font-weight:800;font-size:clamp(30px,9vw,40px);line-height:1;letter-spacing:.5px;color:#3F1521}
   .wys-steps{position:relative;display:flex;flex-direction:column;gap:clamp(18px,5vh,44px);margin:0 auto;width:100%;max-width:420px}
-  .wys-line{position:absolute;left:30px;top:31px;bottom:31px;width:2px;background:#3F1521;transform-origin:top;transform:scaleY(0);transition:transform 1.1s cubic-bezier(.3,.7,.2,1) .15s}
+  .wys-seg{position:absolute;left:30px;width:2px;background:#3F1521;transform-origin:top;transform:scaleY(0);transition:transform .5s cubic-bezier(.45,0,.25,1);z-index:0}
+  .wys h2{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
   .wys-step{display:flex;align-items:center;gap:18px;opacity:0;transform:translateY(40px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
   .wys-num{flex:none;width:62px;height:62px;border-radius:50%;background:#3F1521;color:#fff;display:grid;place-items:center;font-weight:800;font-size:28px;box-shadow:0 6px 16px rgba(63,21,33,.22);position:relative;z-index:1}
   .wys-t{font-weight:800;font-size:clamp(17px,5.4vw,22px);line-height:1.15;text-transform:uppercase}
@@ -27,16 +28,19 @@
   .wys-down i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#3F1521;animation:wysBob 1.8s ease-in-out infinite}
   .wys-down svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   @keyframes wysBob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-  .wys.on .wys-line{transform:scaleY(1)}
-  .wys.on .wys-step,.wys.on .wys-sum{opacity:1;transform:none}
+  .wys.on h2,.wys.on .wys-step,.wys.on .wys-sum{opacity:1;transform:none}
+  .wys.on .wys-seg{transform:scaleY(1)}
   .wys.on .wys-down{opacity:1}
-  .wys.on .wys-step:nth-of-type(1){transition-delay:.15s}
-  .wys.on .wys-step:nth-of-type(2){transition-delay:.35s}
-  .wys.on .wys-step:nth-of-type(3){transition-delay:.55s}
-  .wys.on .wys-sum{transition-delay:.75s}
-  .wys.on .wys-down{transition-delay:1s}
-  @media (max-height:640px){.wys-num{width:50px;height:50px;font-size:23px}.wys-line{left:24px;top:25px;bottom:25px}.wys-sum{padding:14px}}
-  @media (prefers-reduced-motion:reduce){.wys-step,.wys-sum,.wys-down,.wys-line{transition:none!important}.wys-down i{animation:none}}
+  .wys.on h2{transition-delay:0s}
+  .wys.on .s1{transition-delay:.45s}
+  .wys.on .g1{transition-delay:1.05s}
+  .wys.on .s2{transition-delay:1.5s}
+  .wys.on .g2{transition-delay:2.1s}
+  .wys.on .s3{transition-delay:2.55s}
+  .wys.on .wys-sum{transition-delay:3.15s}
+  .wys.on .wys-down{transition-delay:3.6s}
+  @media (max-height:640px){.wys-num{width:50px;height:50px;font-size:23px}.wys-seg{left:24px}.wys-sum{padding:14px}}
+  @media (prefers-reduced-motion:reduce){.wys h2,.wys-step,.wys-sum,.wys-down,.wys-seg{transition:none!important}.wys-down i{animation:none}}
 }
 </style>
 <section class="wys" id="wys-steps" aria-label="Всего 3 шага">
@@ -46,10 +50,10 @@
   <div class="wys-in">
     <h2>ВСЕГО 3 ШАГА</h2>
     <div class="wys-steps">
-      <div class="wys-line"></div>
-      <div class="wys-step"><div class="wys-num">1</div><div><div class="wys-t">Выбираешь вещь</div><div class="wys-d">Размер, цвет и модель: футболка или лонгслив</div></div></div>
-      <div class="wys-step"><div class="wys-num">2</div><div><div class="wys-t">Собираешь дизайн</div><div class="wys-d">Стикеры и патчи в конструкторе</div></div></div>
-      <div class="wys-step"><div class="wys-num">3</div><div><div class="wys-t">Отправляешь</div><div class="wys-d">Мы прессуем принты и отправляем готовую вещь</div></div></div>
+      <div class="wys-seg g1"></div><div class="wys-seg g2"></div>
+      <div class="wys-step s1"><div class="wys-num">1</div><div><div class="wys-t">Выбираешь вещь</div><div class="wys-d">Размер, цвет и модель: футболка или лонгслив</div></div></div>
+      <div class="wys-step s2"><div class="wys-num">2</div><div><div class="wys-t">Собираешь дизайн</div><div class="wys-d">Стикеры и патчи в конструкторе</div></div></div>
+      <div class="wys-step s3"><div class="wys-num">3</div><div><div class="wys-t">Отправляешь</div><div class="wys-d">Мы прессуем принты и отправляем готовую вещь</div></div></div>
     </div>
     <div class="wys-sum"><b>ИТОГ = ИЗДЕЛИЕ<br>+ СТИКЕРЫ И ПАТЧИ</b><span>Сумма считается в конструкторе сразу</span></div>
     <a class="wys-down" href="#rec4796228203" aria-label="Перейти к конструктору"><span>Конструктор ниже</span><i><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></i></a>
@@ -58,6 +62,16 @@
 <script>
 (function(){
   var s=document.getElementById('wys-steps');if(!s)return;
+  function segs(){
+    var box=s.querySelector('.wys-steps'),n=box.querySelectorAll('.wys-num'),g=box.querySelectorAll('.wys-seg'),br=box.getBoundingClientRect();
+    for(var i=0;i<2;i++){
+      var a=n[i].getBoundingClientRect(),b=n[i+1].getBoundingClientRect(),x=a.left+a.width/2-br.left-1;
+      /* учитываем, что шаги ещё сдвинуты анимацией */
+      var off=parseFloat(getComputedStyle(n[i].parentNode).transform.split(',')[5])||0,offb=parseFloat(getComputedStyle(n[i+1].parentNode).transform.split(',')[5])||0;
+      g[i].style.left=x+'px';g[i].style.top=(a.bottom-off-br.top)+'px';g[i].style.height=Math.max(0,(b.top-offb)-(a.bottom-off))+'px';
+    }
+  }
+  segs();window.addEventListener('resize',segs);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(segs);setTimeout(segs,800);
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>.35){s.classList.add('on');io.disconnect()}})},{threshold:[0,.35,.6]});
     io.observe(s);
