@@ -29,7 +29,7 @@
 var root=document.getElementById('wsRail');if(!root||root.getAttribute('data-ready'))return;root.setAttribute('data-ready','1');
 
 /* ==== НАСТРОЙКИ ==== */
-var BASE='https://cdn.jsdelivr.net/gh/ulzhantursubek-ops/stickers@a04d26353d70a8ace54909b7214186d6833b41b5/rail3/';
+var BASE='https://cdn.jsdelivr.net/gh/ulzhantursubek-ops/stickers@8e37e39a683a067e90cd520c25d1fa82cca8f30c/rail3/';
 var ITEMS=[
  {name:'Чёрная футболка',    sub:'оверсайз · 240 г', side:BASE+'black_side.webp', front:BASE+'black_front.webp', fb:.761},
  {name:'Серая футболка',     sub:'оверсайз · 240 г', side:BASE+'grey_side.webp',  front:BASE+'grey_front.webp',  fb:.741},
@@ -40,6 +40,7 @@ var START=0;               /* какая вещь развёрнута снач�
 var AUTOPLAY=3800;         /* мс между сменой, 0 — выключить */
 var LINK='#rec4796228203'; /* куда ведёт нажатие на развёрнутую вещь ('' — никуда) */
 var SHOW_BG=true;          /* голубой фон внутри элемента */
+var GAP=32;                /* отступ рейла от заголовка, px */
 var RAIL_Y_PC=0.16;        /* высота рейла на компьютере (доля высоты элемента) */
 var RAIL_Y_MOB=0.21;       /* высота рейла на телефоне */
 var BOTTOM_PC=0.97;        /* до какой высоты могут опускаться вещи на компьютере */
@@ -61,9 +62,23 @@ ITEMS.forEach(function(it,k){
   track.appendChild(d);els.push(d);
 });
 var G={};
+function textRight(y){
+  var blk=root.closest('.t396');if(!blk)return 0;var rr=root.getBoundingClientRect(),mx=0;
+  [].slice.call(blk.querySelectorAll('.t396__elem')).forEach(function(e){
+    if(e.contains(root)||e.querySelector('.tn-atom__html'))return;var tp=e.getAttribute('data-elem-type');if(tp&&tp!=='text')return;
+    var rg=document.createRange();rg.selectNodeContents(e);
+    [].slice.call(rg.getClientRects()).forEach(function(q){
+      var top=q.top-rr.top,bot=q.bottom-rr.top;
+      if(q.width>0&&top<y+20&&bot>y-20)mx=Math.max(mx,q.right-rr.left);
+    });
+  });
+  return mx;
+}
 function layout(){
   var W=root.clientWidth,H=root.clientHeight,desk=W>=700;
-  var L=desk?W*.40:W*.04,R=desk?W*.97:W*.96,avail=R-L,y=H*(desk?RAIL_Y_PC:RAIL_Y_MOB);
+  var L=desk?W*.40:W*.04,R=desk?W*.97:W*.96,y=H*(desk?RAIL_Y_PC:RAIL_Y_MOB);
+  var clear=textRight(y);if(clear>0)L=Math.max(L,clear+GAP+W*.01);
+  var avail=R-L;
   var FW=.86,SW=.25;                              /* ширина места под развёрнутую / боковую вещь, в долях S */
   var S=Math.min(avail/(FW+(n-1)*SW),(H*(desk?BOTTOM_PC:BOTTOM_MOB)-y-(desk?44:34))/(AR*.99));
   var th=Math.max(4,S*.016);                      /* толщина перекладины */
@@ -93,6 +108,6 @@ var pre=0;ITEMS.forEach(function(it){[it.side,it.front].forEach(function(u){var 
 function whenReady(cb){var t0=Date.now();(function w(){if(pre>=n*2||Date.now()-t0>2500)cb();else setTimeout(w,80)})()}
 if(window.IntersectionObserver){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){io.disconnect();whenReady(intro)}})},{threshold:.25});io.observe(root)}else whenReady(intro);
 if(window.ResizeObserver)new ResizeObserver(layout).observe(root);else window.addEventListener('resize',layout);
-layout();play();
+layout();play();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);setTimeout(layout,1200);
 })();
 </script>
