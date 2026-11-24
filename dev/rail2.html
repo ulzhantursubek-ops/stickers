@@ -66,11 +66,12 @@ function textRight(y){
   var blk=root.closest('.t396');if(!blk)return 0;var rr=root.getBoundingClientRect(),mx=0;
   [].slice.call(blk.querySelectorAll('.t396__elem')).forEach(function(e){
     if(e.contains(root)||e.querySelector('.tn-atom__html'))return;var tp=e.getAttribute('data-elem-type');if(tp&&tp!=='text')return;
-    var rg=document.createRange();rg.selectNodeContents(e);
-    [].slice.call(rg.getClientRects()).forEach(function(q){
-      var top=q.top-rr.top,bot=q.bottom-rr.top;
-      if(q.width>0&&top<y+20&&bot>y-20)mx=Math.max(mx,q.right-rr.left);
-    });
+    var tw=document.createTreeWalker(e,NodeFilter.SHOW_TEXT,null),nd;
+    while((nd=tw.nextNode())){if(!nd.nodeValue.trim())continue;var rg=document.createRange();rg.selectNodeContents(nd);
+      [].slice.call(rg.getClientRects()).forEach(function(q){
+        var top=q.top-rr.top,bot=q.bottom-rr.top;
+        if(q.width>0&&top<y+20&&bot>y-20)mx=Math.max(mx,q.right-rr.left);
+      });}
   });
   return mx;
 }
